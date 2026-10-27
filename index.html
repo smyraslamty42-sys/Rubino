@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پنل فالوور روبیکا | روبینو</title>
+<link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --bg-color: #0d0d0d;
+    --card-bg: #1c1c1e;
+    --card-bg-light: #2c2c2e;
+    --yellow: #ffcc00;
+    --yellow-dark: #e6b800;
+    --yellow-glow: rgba(255, 204, 0, 0.3);
+    --text-main: #ffffff;
+    --text-muted: #8e8e93;
+    --success: #32d74b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 20px 16px 40px;
+    background-image: radial-gradient(circle at top, #1a1a1a 0%, #0d0d0d 100%);
+  }
+
+  .container { width: 100%; max-width: 480px; }
+
+  /* هدر بالا */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding: 0 8px;
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+  .header-logo span { color: var(--yellow); }
+  .badge-official {
+    background: rgba(255, 204, 0, 0.1);
+    color: var(--yellow);
+    border: 1px solid var(--yellow);
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* کارت اصلی (انتخاب تعداد) */
+  .main-card {
+    background: linear-gradient(145deg, #1c1c1e, #151515);
+    border: 1px solid #333;
+    border-radius: 24px;
+    padding: 24px;
+    text-align: center;
+    position: relative;
+    margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+  .main-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--yellow), transparent);
+    opacity: 0.5;
+  }
+  .main-card h2 { font-size: 1.1rem; color: var(--yellow); margin-bottom: 16px; }
+  
+  /* انتخاب تعداد فالوور */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .plans-grid .plan-item:nth-child(4),
+  .plans-grid .plan-item:nth-child(5) {
+    grid-column: span 1.5;
+  }
+
+  .plan-item {
+    background: var(--card-bg-light);
+    border: 2px solid transparent;
+    border-radius: 14px;
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .plan-item .num { font-size: 1.1rem; font-weight: bold; color: #fff; }
+  .plan-item .lbl { font-size: 0.7rem; color: var(--text-muted); }
+  
+  .plan-item:hover { background: #333; }
+  .plan-item.active {
+    border-color: var(--yellow);
+    background: rgba(255, 204, 0, 0.1);
+    box-shadow: 0 0 15px var(--yellow-glow);
+  }
+  .plan-item.active .num { color: var(--yellow); }
+
+  /* ورودی تعداد دلخواه */
+  .custom-input-wrapper {
+    background: var(--card-bg-light);
+    border-radius: 14px;
+    padding: 2px 16px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border: 1px solid #444;
+  }
+  .custom-input-wrapper input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 14px 0;
+    width: 100%;
+    outline: none;
+  }
+  .custom-input-wrapper input::placeholder { color: var(--text-muted); }
+
+  /* دکمه اصلی سفارش */
+  .btn-glow {
+    background: linear-gradient(90deg, var(--yellow), var(--yellow-dark));
+    color: #000;
+    border: none;
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 20px var(--yellow-glow);
+    transition: 0.3s;
+  }
+  .btn-glow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(255, 204, 0, 0.5);
+  }
+
+  /* بخش آیدی‌ها (پشتیبانی و کانال اعتماد) */
+  .ids-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .id-box {
+    background: var(--card-bg);
+    border: 1px dashed #444;
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: 0.2s;
+  }
+  .id-box:hover { border-color: var(--yellow); }
+  .id-box .info { display: flex; flex-direction: column; gap: 4px; }
+  .id-box .info span { font-size: 0.75rem; color: var(--text-muted); }
+  .id-box .info code {
+    font-size: 1rem;
+    color: var(--yellow);
+    font-family: monospace;
+    direction: ltr;
+    text-align: right;
+  }
+  .copy-btn {
+    background: rgba(255, 204, 0, 0.15);
+    color: var(--yellow);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .copy-btn:hover { background: rgba(255, 204, 0, 0.3); }
+
+  /* --- بخش نماد اعتماد (ای‌نماد) --- */
+  .enamad-section {
+    text-align: center;
+    padding: 30px 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+    transition: 0.3s;
+  }
+  .enamad-section:hover {
+    opacity: 1;
+  }
+  .enamad-logo {
+    width: 130px;
+    filter: grayscale(100%) contrast(1.5) brightness(1.2);
+    cursor: pointer;
+    margin-bottom: 8px;
+  }
+  .enamad-stars {
+    color: #d1d1d1;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .enamad-text {
+    color: #8e8e93;
+    font-size: 0.75rem;
+    font-family: 'Vazirmatn', sans-serif;
+  }
+
+  /* توست (پیام کپی) */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--success);
+    color: #000;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 100;
+    box-shadow: 0 0 20px rgba(50, 215, 75, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  
+  <!-- هدر -->
+  <div class="header">
+    <div class="header-logo">
+      <i class="fa-solid fa-rocket" style="color:var(--yellow)"></i> پنل روبینو
+    </div>
+    <div class="badge-official">
+      <i class="fa-solid fa-circle-check"></i> رسمی
+    </div>
+  </div>
+
+  <!-- بخش اصلی انتخاب تعداد -->
+  <div class="main-card">
+    <h2>تعداد فالوور روبیکا را انتخاب کنید</h2>
+    
+    <div class="plans-grid" id="plansGrid">
+      <div class="plan-item" data-count="200">
+        <span class="num">۲۰۰</span>
+        <span class="lbl">فالوور</span>
+      </div>
+      <div class="plan-item" data-count="400">
+        <span class="num">۴۰۰</span>
+        <span class="lbl">فالوور</span>
+      </div>
+      <div class="plan-item" data-count="600">
+        <span class="num">۶۰۰</span>
+        <span class="lbl">فالوور</span>
+      </div>
+      <div class="plan-item active" data-count="800">
+        <span class="num">۸۰۰</span>
+        <span class="lbl">فالوور</span>
+      </div>
+      <div class="plan-item" data-count="1000">
+        <span class="num">۱۰۰۰</span>
+        <span class="lbl">فالوور</span>
+      </div>
+    </div>
+
+    <div class="custom-input-wrapper">
+      <input type="number" id="customCount" placeholder="تعداد دلخواه (مثلاً ۱۵۰۰)" min="200" step="100">
+    </div>
+
+    <button class="btn-glow" id="orderBtn">
+      <i class="fa-solid fa-cart-shopping"></i> ثبت سفارش در روبیکا
+    </button>
+  </div>
+
+  <!-- بخش آیدی‌ها (پشتیبانی و کانال اعتماد) -->
+  <div class="ids-container">
+    <!-- آیدی پشتیبانی -->
+    <div class="id-box">
+      <div class="info">
+        <span>پیوی پشتیبانی:</span>
+        <code id="supportId">@Itz_pilot</code>
+      </div>
+      <button class="copy-btn" onclick="copyToClipboard('@Itz_pilot')">
+        <i class="fa-regular fa-copy"></i> کپی
+      </button>
+    </div>
+
+    <!-- کانال اعتماد -->
+    <div class="id-box" style="border-color: rgba(50, 215, 75, 0.4);">
+      <div class="info">
+        <span style="color: var(--success);">کانال اعتماد در روبیکا:</span>
+        <code id="trustId" style="color: var(--success);">@etemad_follo</code>
+      </div>
+      <button class="copy-btn" style="background: rgba(50, 215, 75, 0.15); color: var(--success);" onclick="copyToClipboard('@etemad_follo')">
+        <i class="fa-regular fa-copy"></i> کپی
+      </button>
+    </div>
+  </div>
+
+  <!-- نماد اعتماد الکترونیکی (ای‌نماد) -->
+  <div class="enamad-section">
+    <a href="https://enamad.ir" target="_blank" style="text-decoration: none;">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/E-namad.svg/200px-E-namad.svg.png" alt="نماد اعتماد الکترونیکی" class="enamad-logo">
+    </a>
+    <div class="enamad-stars">
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-solid fa-star"></i>
+    </div>
+    <div class="enamad-text">جهت اطمینان کلیک نمایید</div>
+  </div>
+
+</div>
+
+<!-- پیام کپی شدن -->
+<div class="toast" id="toast">
+  <i class="fa-solid fa-check-circle"></i> کپی شد!
+</div>
+
+<script>
+  let selectedCount = 800; 
+
+  document.querySelectorAll('.plan-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.plan-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      selectedCount = item.dataset.count;
+      document.getElementById('customCount').value = '';
+    });
+  });
+
+  document.getElementById('customCount').addEventListener('input', (e) => {
+    const val = parseInt(e.target.value);
+    if (!isNaN(val) && val > 0) {
+      selectedCount = val;
+      document.querySelectorAll('.plan-item').forEach(i => i.classList.remove('active'));
+    }
+  });
+
+  document.getElementById('orderBtn').addEventListener('click', () => {
+    const count = selectedCount || 200;
+    window.open(`https://rubika.ir/Itz_pilot`, '_blank');
+    const orderText = `سلام، سفارش فالوور روبیکا دارم.\nتعداد درخواستی: ${count} عدد\nلطفاً راهنمایی بفرمایید.`;
+    copyToClipboard(orderText, false);
+  });
+
+  function copyToClipboard(text, showToast = true) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => {
+        if (showToast) showToastMsg();
+      });
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.select();
+      try { document.execCommand('copy'); } catch (err) {}
+      document.body.removeChild(textArea);
+      if (showToast) showToastMsg();
+    }
+  }
+
+  function showToastMsg() {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+</script>
+</body>
+</html>
